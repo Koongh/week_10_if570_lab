@@ -1,10 +1,13 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.graphics.Color
+import android.os.Parcel
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.ListAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +17,7 @@ import com.example.android.trackmysleepquality.convertNumericQualityToString
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.convertDurationToFormatted
 import com.example.android.trackmysleepquality.convertNumericQualityToString
+
 
 
 class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>() {
@@ -30,12 +34,12 @@ class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>() {
 
 
 
-    class SleepNightAdapter: RecyclerView.Adapter<SleepNightAdapter.ViewHolder>()  {
-    var data = listOf<SleepNight>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class SleepNightAdapter:ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(SleepNightDiffCallback()) {
+//    var data = listOf<SleepNight>()
+//        set(value) {
+//            field = value
+//            notifyDataSetChanged()
+//        }
     class ViewHolder private constructor (itemView: View) : RecyclerView.ViewHolder(itemView){
         val sleepLength: TextView = itemView.findViewById(R.id.sleep_length)
         val quality: TextView = itemView.findViewById(R.id.quality_string)
@@ -72,10 +76,10 @@ class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>() {
         return ViewHolder.from(parent)
     }
 
-    override fun getItemCount() = data.size
+//    override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
@@ -83,7 +87,7 @@ class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>() {
         position: Int,
         holder: ViewHolder
     ) {
-        val item = data[position]
+        val item = getItem(position)
         val res = holder.itemView.context.resources
         holder.sleepLength.text = convertDurationToFormatted(
             item.startTimeMilli,
@@ -102,8 +106,6 @@ class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>() {
             }
         )
     }
-
-
 
 
 }
