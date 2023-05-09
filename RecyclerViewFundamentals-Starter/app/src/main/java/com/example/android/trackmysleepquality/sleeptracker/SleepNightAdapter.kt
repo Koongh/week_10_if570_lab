@@ -35,24 +35,8 @@ class SleepNightAdapter:ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(Sl
 class ViewHolder private constructor(val binding: ListItemSleepNightBinding) :
     RecyclerView.ViewHolder(binding.root){
     fun bind(item: SleepNight) {
-        val res = itemView.context.resources
-        binding.sleepLength.text = convertDurationToFormatted(
-            item.startTimeMilli, item.endTimeMilli, res
-        )
-        binding.qualityString.text = convertNumericQualityToString(
-            item.sleepQuality, res
-        )
-        binding.qualityImage.setImageResource(
-            when (item.sleepQuality) {
-                0 -> R.drawable.ic_sleep_0
-                1 -> R.drawable.ic_sleep_1
-                2 -> R.drawable.ic_sleep_2
-                3 -> R.drawable.ic_sleep_3
-                4 -> R.drawable.ic_sleep_4
-                5 -> R.drawable.ic_sleep_5
-                else -> R.drawable.ic_sleep_active
-            }
-        )
+        binding.sleep = item
+        binding.executePendingBindings()
     }
 
         companion object {
@@ -81,29 +65,29 @@ class ViewHolder private constructor(val binding: ListItemSleepNightBinding) :
         holder.bind(item)
     }
 
-    private fun bind(
-        position: Int,
-        holder: ViewHolder
-    ) {
-        val item = getItem(position)
-        val res = holder.itemView.context.resources
-        holder.binding.sleepLength.text = convertDurationToFormatted(
-            item.startTimeMilli,
-            item.endTimeMilli, res
-        )
-        holder.binding.qualityString.text = convertNumericQualityToString(item.sleepQuality, res)
-        holder.binding.qualityImage.setImageResource(
-            when (item.sleepQuality) {
-                0 -> R.drawable.ic_sleep_0
-                1 -> R.drawable.ic_sleep_1
-                2 -> R.drawable.ic_sleep_2
-                3 -> R.drawable.ic_sleep_3
-                4 -> R.drawable.ic_sleep_4
-                5 -> R.drawable.ic_sleep_5
-                else -> R.drawable.ic_sleep_active
-            }
-        )
-    }
+//    private fun bind(
+//        position: Int,
+//        holder: ViewHolder
+//    ) {
+//        val item = getItem(position)
+//        val res = holder.itemView.context.resources
+//        holder.binding.sleepLength.text = convertDurationToFormatted(
+//            item.startTimeMilli,
+//            item.endTimeMilli, res
+//        )
+//        holder.binding.qualityString.text = convertNumericQualityToString(item.sleepQuality, res)
+//        holder.binding.qualityImage.setImageResource(
+//            when (item.sleepQuality) {
+//                0 -> R.drawable.ic_sleep_0
+//                1 -> R.drawable.ic_sleep_1
+//                2 -> R.drawable.ic_sleep_2
+//                3 -> R.drawable.ic_sleep_3
+//                4 -> R.drawable.ic_sleep_4
+//                5 -> R.drawable.ic_sleep_5
+//                else -> R.drawable.ic_sleep_active
+//            }
+//        )
+//    }
 
 
 }
